@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useLoaderData } from 'react-router-dom';
 import {
     Card,
@@ -9,9 +9,10 @@ import {
     IconButton,
 } from "@material-tailwind/react";
 import { FaPencilAlt, FaTrashAlt } from "react-icons/fa";
+import EditTask from '../EditTask/EditTask';
 
-const MyTask = ({ task, handleDelete }) => {
-    const { _id, title } = task;
+const MyTask = ({ task, handleDelete, handleOpen }) => {
+    const { _id, title, description } = task;
 
     return (
         <Card>
@@ -27,15 +28,13 @@ const MyTask = ({ task, handleDelete }) => {
                     {title}
                 </Typography>
                 <Typography>
-                    The place is close to Barceloneta Beach and bus stop just 2 min by
-                    walk and near to "Naviglio" where you can enjoy the main night life in
-                    Barcelona.
+                    {description}
                 </Typography>
             </CardBody>
             <CardFooter divider className="flex items-center justify-between py-3">
                 <Typography variant="small">$899/night</Typography>
                 <Typography variant="small" color="gray" className="flex gap-1">
-                    <IconButton color='green'>
+                    <IconButton onClick={ () => handleOpen(_id) } color='green'>
                         <FaPencilAlt />
                     </IconButton>
                     <IconButton onClick={() => handleDelete(_id)} color='red'>
