@@ -32,8 +32,18 @@ const TopBar = () => {
                 color="blue-gray"
                 className="p-1 font-normal"
             >
-                <Link href="#" className="flex items-center">
-                    Pages
+                <Link to="task/create" className="flex items-center">
+                    Add Task
+                </Link>
+            </Typography>
+            <Typography
+                as="li"
+                variant="small"
+                color="blue-gray"
+                className="p-1 font-normal"
+            >
+                <Link to="/tasks" className="flex items-center">
+                    My tasks
                 </Link>
             </Typography>
             <Typography
@@ -43,34 +53,14 @@ const TopBar = () => {
                 className="p-1 font-normal"
             >
                 <Link href="#" className="flex items-center">
-                    Account
-                </Link>
-            </Typography>
-            <Typography
-                as="li"
-                variant="small"
-                color="blue-gray"
-                className="p-1 font-normal"
-            >
-                <Link href="#" className="flex items-center">
-                    Blocks
-                </Link>
-            </Typography>
-            <Typography
-                as="li"
-                variant="small"
-                color="blue-gray"
-                className="p-1 font-normal"
-            >
-                <Link href="#" className="flex items-center">
-                    Docs
+                    Completed Task
                 </Link>
             </Typography>
         </ul>
     );
 
     return (
-        <Navbar className="mx-auto max-w-full py-2">
+        <Navbar className="mx-auto max-w-full py-2 dark:bg-slate-800">
             <div className="container mx-auto flex items-center justify-between text-blue-gray-900">
                 <Typography
                     as="a"
