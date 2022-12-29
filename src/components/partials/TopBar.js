@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import {
     Navbar,
     MobileNav,
@@ -11,11 +11,23 @@ import {
     MenuItem,
     Switch,
 } from "@material-tailwind/react";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import { BsSun, BsMoon } from "react-icons/bs";
+import { AuthContext } from "../../contexts/AuthProvider/AuthProvider";
+import { toast } from "react-hot-toast";
 
 const TopBar = () => {
     const [openNav, setOpenNav] = useState(false);
+    const { user, logOut } = useContext(AuthContext);
+
+    const handleLogout = () => {
+        logOut()
+        .then()
+        .then(result => {
+            <Navigate to='/login'></Navigate>
+            toast.success('Logout successfully!')
+        })
+    } 
 
     useEffect(() => {
         window.addEventListener(
@@ -42,7 +54,7 @@ const TopBar = () => {
                 color="blue-gray"
                 className="p-1 font-normal"
             >
-                <Link to="/tasks" className="flex items-center">
+                <Link to={`/tasks/${user?.email}`} className="flex items-center">
                     My tasks
                 </Link>
             </Typography>
@@ -52,7 +64,7 @@ const TopBar = () => {
                 color="blue-gray"
                 className="p-1 font-normal"
             >
-                <Link href="#" className="flex items-center">
+                <Link to={`/tasks/completed/${user?.email}`} className="flex items-center">
                     Completed Task
                 </Link>
             </Typography>
@@ -77,17 +89,23 @@ const TopBar = () => {
                         <Switch className="checked:bg-black" defaultChecked />
                         <BsMoon className="ml-2" />
                     </div>
-                    <Menu placement="bottom-end">
-                        <MenuHandler>
-                            <Avatar className="border-2 p-1 cursor-pointer border-violet-600 hover:shadow" width="60" src="./logo192.png" alt="avatar" variant="circular" />
-                        </MenuHandler>
-                        <MenuList>
-                            <MenuItem><Link>All Tasks</Link></MenuItem>
-                            <MenuItem><Link>Completed Tasks</Link></MenuItem>
-                            <MenuItem><Link>Incompleted Tasks</Link></MenuItem>
-                            <MenuItem><Link>Log Out</Link></MenuItem>
-                        </MenuList>
-                    </Menu>
+                    {
+                        user ?
+                            <Menu placement="bottom-end">
+                                <MenuHandler>
+                                    <Avatar className="border-2 p-1 cursor-pointer border-violet-600 hover:shadow" width="60" src="./logo192.png" alt="avatar" variant="circular" />
+                                </MenuHandler>
+                                <MenuList>
+                                    <MenuItem><Link>All Tasks</Link></MenuItem>
+                                    <MenuItem><Link>Completed Tasks</Link></MenuItem>
+                                    <MenuItem><Link>Incompleted Tasks</Link></MenuItem>
+                                    <MenuItem><Link onClick={handleLogout}>Log Out</Link></MenuItem>
+                                </MenuList>
+                            </Menu> :
+                            <Link to='/login' variant="gradient">
+                                Login
+                            </Link>
+                    }
                 </div>
                 <IconButton
                     variant="text"

@@ -1,38 +1,37 @@
 import React, { useContext } from 'react';
-import {
-    Card,
-    CardHeader,
-    CardBody,
-    CardFooter,
-    Typography,
-    Input,
-    Button,
-    Textarea,
-} from "@material-tailwind/react";
+import { AuthContext } from '../../contexts/AuthProvider/AuthProvider';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
-import { AuthContext } from '../../contexts/AuthProvider/AuthProvider';
+import { Button, Card, CardBody, CardFooter, CardHeader, Input, Textarea, Typography } from '@material-tailwind/react';
 
-const AddTask = () => {
-    const { user } = useContext(AuthContext);
+const Register = () => {
+    const { createUser, googleLogin } = useContext(AuthContext);
     const { register, handleSubmit, formState: { errors } } = useForm();
+    const location = useLocation();
+    const navigate = useNavigate();
+
+    const from = location.state?.from?.pathname || '/';
 
     const handleLogin = (data) => {
-        const task = {
-            email: user.email,
-            title: data.title,
-            description: data.description,
-            status: 0,
-        }
-        fetch('https://task-backend-xi.vercel.app/task', {
-            method: 'POST',
-            headers: {
-                'content-type': 'application/json'
-            },
-            body: JSON.stringify(task)
-        })
+
+        createUser(data.email, data.password)
             .then(res => res.json())
-            .then(result => toast.success('Task Added Successfully!'))
+            .then(result => {
+                if (result.user?.uid) {
+                    toast.success('User Created Successfully');
+                }
+            })
+    }
+
+    const handleGoogleLogin = () => {
+        googleLogin()
+            .then(res => res.json())
+            .then(data => {
+                navigate(from);
+                toast.success('User Login Successfully!')
+            })
+            .catch(e => console.error(e))
     }
 
     return (
@@ -59,6 +58,9 @@ const AddTask = () => {
                         <Button className='w-1/3 mx-auto' type='submit' color='teal' variant="gradient" fullWidth>
                             Add Task
                         </Button>
+                        <Link onClick={handleGoogleLogin} className='w-1/3 mx-auto' variant="outlined" fullWidth>
+                            Sign In with Google
+                        </Link>
                     </CardFooter>
                 </form>
             </Card>
@@ -66,4 +68,4 @@ const AddTask = () => {
     );
 };
 
-export default AddTask;
+export default Register;

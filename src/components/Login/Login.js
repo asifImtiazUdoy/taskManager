@@ -12,27 +12,31 @@ import {
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { AuthContext } from '../../contexts/AuthProvider/AuthProvider';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 
-const AddTask = () => {
-    const { user } = useContext(AuthContext);
+const Login = () => {
+    const { login, googleLogin } = useContext(AuthContext);
     const { register, handleSubmit, formState: { errors } } = useForm();
+    const location = useLocation();
+    const navigate = useNavigate();
+
+    const from = location.state?.from?.pathname || '/';
 
     const handleLogin = (data) => {
-        const task = {
-            email: user.email,
-            title: data.title,
-            description: data.description,
-            status: 0,
-        }
-        fetch('https://task-backend-xi.vercel.app/task', {
-            method: 'POST',
-            headers: {
-                'content-type': 'application/json'
-            },
-            body: JSON.stringify(task)
+        login(data.email, data.password)
+            .then(result => {
+                toast.success('User logged in successfully!')
+            })
+            .catch(e => console.error(e))
+    }
+
+    const handleGoogleLogin = () => {
+        googleLogin()
+        .then(result => {
+            navigate(from);
+            toast.success('User Login Successfully!')
         })
-            .then(res => res.json())
-            .then(result => toast.success('Task Added Successfully!'))
+        .catch(e => console.error(e))
     }
 
     return (
@@ -45,20 +49,22 @@ const AddTask = () => {
                         className="mb-4 grid h-28 place-items-center"
                     >
                         <Typography variant="h3" color="white">
-                            Add a Task
+                            Sign In
                         </Typography>
                     </CardHeader>
                     <CardBody className="flex flex-col gap-4">
-                        <Input label="Task Title" size="lg" {...register('title', { required: "Task name is required" })} />
+                        <Input label="Email" type='email' size="lg" {...register('email', { required: "Task name is required" })} />
                         {errors.title && <span className='text-red-600'>This field is required</span>}
-                        <Textarea label="Task Description" {...register('description', { required: "Task Description is required" })} />
+                        <Input label="Password" type='password' size="lg" {...register('password', { required: "Task name is required" })} />
                         {errors.description && <span className='text-red-600'>This field is required</span>}
-                        <Input type="file" size="lg" />
                     </CardBody>
                     <CardFooter className="pt-0">
                         <Button className='w-1/3 mx-auto' type='submit' color='teal' variant="gradient" fullWidth>
                             Add Task
                         </Button>
+                        <Link onClick={handleGoogleLogin} className='w-1/3 mx-auto' variant="outlined" fullWidth>
+                            Sign In with Google
+                        </Link>
                     </CardFooter>
                 </form>
             </Card>
@@ -66,4 +72,4 @@ const AddTask = () => {
     );
 };
 
-export default AddTask;
+export default Login;

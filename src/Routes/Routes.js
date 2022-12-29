@@ -1,7 +1,10 @@
 import { createBrowserRouter } from "react-router-dom";
 import AddTask from "../components/AddTask/AddTask";
 import Main from "../components/layouts/Main";
+import Login from "../components/Login/Login";
 import MyTasks from "../components/MyTask/MyTasks";
+import Register from "../components/Register/Register";
+import PrivateRoutes from "./PrivateRoutes";
 
 export const route = createBrowserRouter([
     {
@@ -13,10 +16,23 @@ export const route = createBrowserRouter([
                 element: <AddTask></AddTask>
             },
             {
-                path: '/tasks',
-                element: <MyTasks></MyTasks>,
-                loader: () => fetch('http://localhost:5000/tasks')
-            }
+                path: '/tasks/:email',
+                element: <PrivateRoutes><MyTasks></MyTasks></PrivateRoutes>,
+                loader: ({ params }) => fetch(`https://task-backend-xi.vercel.app/tasks?email=${params.email}`)
+            },
+            {
+                path: '/tasks/completed/:email',
+                element: <PrivateRoutes><MyTasks></MyTasks></PrivateRoutes>,
+                loader: ({ params }) => fetch(`https://task-backend-xi.vercel.app/tasks?type=completed&email=${params.email}`)
+            },
+            {
+                path: '/login',
+                element: <Login></Login>
+            },
+            {
+                path: '/register',
+                element: <Register></Register>
+            },
         ]
     }
 ])

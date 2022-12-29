@@ -18,7 +18,7 @@ const EditTask = ({ open, handleOpen, task }) => {
     const { _id, title, description } = task;
 
     const handleUpdate = (data) => {
-        fetch(`http://localhost:5000/task/${_id}`, {
+        fetch(`https://task-backend-xi.vercel.app/task/${_id}`, {
             method: 'PUT',
             headers: {
                 'content-type': 'application/json'
