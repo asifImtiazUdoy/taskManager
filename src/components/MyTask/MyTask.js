@@ -12,7 +12,7 @@ import { FaPencilAlt, FaTrashAlt } from "react-icons/fa";
 import { toast } from 'react-hot-toast';
 
 const MyTask = ({ task, handleDelete, handleOpen, refetch }) => {
-    const { _id, title, description, status } = task;
+    const { _id, title, description, status, image } = task;
     const handleUpdate = (event) => {
         let data = { status: 0 };
 
@@ -36,10 +36,10 @@ const MyTask = ({ task, handleDelete, handleOpen, refetch }) => {
     }
 
     return (
-        <Card className='justify-between'>
+        <Card className='justify-between mb-12'>
             <CardHeader color="blue" className="relative h-56">
                 <img
-                    src="/img/blog.jpg"
+                    src={image}
                     alt="TaskImage"
                     className="h-full w-full"
                 />

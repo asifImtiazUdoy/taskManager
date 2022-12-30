@@ -36,5 +36,9 @@ export const route = createBrowserRouter([
                 element: <Register></Register>
             },
         ]
+    },
+    {
+        path: '/*',
+        element: 'This page is not exists'
     }
 ])
