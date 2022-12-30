@@ -45,6 +45,16 @@ const TopBar = () => {
                 color="blue-gray"
                 className="p-1 font-normal"
             >
+                <Link to="/" className="flex items-center">
+                    Home
+                </Link>
+            </Typography>
+            <Typography
+                as="li"
+                variant="small"
+                color="blue-gray"
+                className="p-1 font-normal"
+            >
                 <Link to="task/create" className="flex items-center">
                     Add Task
                 </Link>

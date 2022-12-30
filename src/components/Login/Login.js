@@ -7,12 +7,11 @@ import {
     Typography,
     Input,
     Button,
-    Textarea,
 } from "@material-tailwind/react";
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { AuthContext } from '../../contexts/AuthProvider/AuthProvider';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const Login = () => {
     const { login, googleLogin } = useContext(AuthContext);
@@ -25,18 +24,23 @@ const Login = () => {
     const handleLogin = (data) => {
         login(data.email, data.password)
             .then(result => {
-                toast.success('User logged in successfully!')
+                if (result.acknowledged) {
+                    navigate(from);
+                    toast.success('User logged in successfully!')
+                }
             })
             .catch(e => console.error(e))
     }
 
     const handleGoogleLogin = () => {
         googleLogin()
-        .then(result => {
-            navigate(from);
-            toast.success('User Login Successfully!')
-        })
-        .catch(e => console.error(e))
+            .then(result => {
+                if (result.acknowledged) {
+                    toast.success('User Login Successfully!')
+                    navigate(from);
+                }
+            })
+            .catch(e => console.error(e))
     }
 
     return (

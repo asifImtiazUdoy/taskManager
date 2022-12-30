@@ -1,5 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 import AddTask from "../components/AddTask/AddTask";
+import Home from "../components/Home/Home";
 import Main from "../components/layouts/Main";
 import Login from "../components/Login/Login";
 import MyTasks from "../components/MyTask/MyTasks";
@@ -12,8 +13,12 @@ export const route = createBrowserRouter([
         element: <Main></Main>,
         children: [
             {
+                path: '/',
+                element: <Home></Home>
+            },
+            {
                 path: '/task/create',
-                element: <AddTask></AddTask>
+                element: <PrivateRoutes><AddTask></AddTask></PrivateRoutes>
             },
             {
                 path: '/tasks',
