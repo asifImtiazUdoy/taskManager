@@ -40,8 +40,8 @@ const Login = () => {
     }
 
     return (
-        <div className="mt-12 grid grid-cols-5">
-            <Card className="container mx-auto col-start-2 col-span-3">
+        <div className="mt-12 grid grid-cols-7">
+            <Card className="container mx-auto col-start-3 col-span-3">
                 <form onSubmit={handleSubmit(handleLogin)}>
                     <CardHeader
                         variant="gradient"
@@ -59,12 +59,12 @@ const Login = () => {
                         {errors.description && <span className='text-red-600'>This field is required</span>}
                     </CardBody>
                     <CardFooter className="pt-0">
-                        <Button className='w-1/3 mx-auto' type='submit' color='teal' variant="gradient" fullWidth>
-                            Add Task
+                        <Button className='mb-6' type='submit' color='teal' variant="gradient" fullWidth>
+                            Log In
                         </Button>
-                        <Link onClick={handleGoogleLogin} className='w-1/3 mx-auto' variant="outlined" fullWidth>
+                        <Button type='button' onClick={handleGoogleLogin} variant="outlined" fullWidth>
                             Sign In with Google
-                        </Link>
+                        </Button>
                     </CardFooter>
                 </form>
             </Card>

@@ -10,6 +10,7 @@ import {
     MenuList,
     MenuItem,
     Switch,
+    Button,
 } from "@material-tailwind/react";
 import { Link, Navigate } from "react-router-dom";
 import { BsSun, BsMoon } from "react-icons/bs";
@@ -22,12 +23,12 @@ const TopBar = () => {
 
     const handleLogout = () => {
         logOut()
-        .then()
-        .then(result => {
-            <Navigate to='/login'></Navigate>
-            toast.success('Logout successfully!')
-        })
-    } 
+            .then()
+            .then(result => {
+                <Navigate to='/login'></Navigate>
+                toast.success('Logout successfully!')
+            })
+    }
 
     useEffect(() => {
         window.addEventListener(
@@ -75,12 +76,11 @@ const TopBar = () => {
         <Navbar className="mx-auto max-w-full py-2 dark:bg-slate-800">
             <div className="container mx-auto flex items-center justify-between text-blue-gray-900">
                 <Typography
-                    as="a"
-                    href="#"
+                    as="button"
                     variant="small"
                     className="mr-4 cursor-pointer py-1.5 font-normal"
                 >
-                    <span>Material Tailwind</span>
+                    <Link to='/'>Task Manager</Link>
                 </Typography>
                 <div className="hidden lg:block">{navList}</div>
                 <div className="flex">
@@ -99,12 +99,21 @@ const TopBar = () => {
                                     <MenuItem><Link>All Tasks</Link></MenuItem>
                                     <MenuItem><Link>Completed Tasks</Link></MenuItem>
                                     <MenuItem><Link>Incompleted Tasks</Link></MenuItem>
-                                    <MenuItem><Link onClick={handleLogout}>Log Out</Link></MenuItem>
+                                    <MenuItem><span onClick={handleLogout}>Log Out</span></MenuItem>
                                 </MenuList>
                             </Menu> :
-                            <Link to='/login' variant="gradient">
-                                Login
-                            </Link>
+                            <>
+                                <Link to='/register' variant="gradient">
+                                    <Button variant="outlined" className="focus:shadow-none">
+                                        Register
+                                    </Button>
+                                </Link>
+                                <Link to='/login' variant="gradient">
+                                    <Button variant="outlined" className="ml-2 focus:shadow-none">
+                                        Login
+                                    </Button>
+                                </Link>
+                            </>
                     }
                 </div>
                 <IconButton
