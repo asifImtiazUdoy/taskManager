@@ -69,7 +69,7 @@ const MyTasks = () => {
             <div className="container text-right w-full mt-4">
                 {
                     location.pathname === "/tasks/completed" ?
-                        <Button><Link to='tasks/incompleted'>Incompleted Tasks</Link></Button> : (location.pathname === "/tasks/incompleted" ? <Button><Link to='tasks/completed'>Completed Tasks</Link></Button> : '')
+                        <Button><Link to='/tasks/incompleted'>Incompleted Tasks</Link></Button> : (location.pathname === "/tasks/incompleted" ? <Button><Link to='/tasks/completed'>Completed Tasks</Link></Button> : '')
                 }
             </div>
             <div className='container mx-auto grid grid-cols-3 gap-4 mt-12'>

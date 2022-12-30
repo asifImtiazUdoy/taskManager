@@ -7,12 +7,17 @@ import {
     Typography,
     IconButton,
     Checkbox,
+    Textarea,
+    Button,
 } from "@material-tailwind/react";
-import { FaPencilAlt, FaTrashAlt } from "react-icons/fa";
+import { FaInbox, FaPencilAlt, FaTrashAlt } from "react-icons/fa";
 import { toast } from 'react-hot-toast';
+import { useForm } from 'react-hook-form';
 
 const MyTask = ({ task, handleDelete, handleOpen, refetch }) => {
-    const { _id, title, description, status, image } = task;
+    const { _id, title, description, status, image, message } = task;
+    const { register, handleSubmit } = useForm();
+
     const handleUpdate = (event) => {
         let data = { status: 0 };
 
@@ -32,6 +37,21 @@ const MyTask = ({ task, handleDelete, handleOpen, refetch }) => {
             .then(result => {
                 refetch();
                 toast.success('Task Status Updated Successfully!')
+            })
+    }
+
+    const handleMessage = (data) => {
+        fetch(`https://task-backend-xi.vercel.app/task/${_id}`, {
+            method: 'PUT',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+            .then(res => res.json())
+            .then(result => {
+                refetch();
+                toast.success('Message Added Successfully!')
             })
     }
 
@@ -63,6 +83,17 @@ const MyTask = ({ task, handleDelete, handleOpen, refetch }) => {
                     </IconButton>
                 </Typography>
             </CardFooter>
+            {
+                status === 1 ?
+                    <div className='px-6'>
+                        <form className='block' onSubmit={handleSubmit(handleMessage)}>
+                            <Textarea label="Task Message" {...register('message')} defaultValue={message} />
+                            <Button className='mt-4 mb-2' type='submit' color='teal' variant="gradient" fullWidth>
+                                Add Message
+                            </Button>
+                        </form>
+                    </div> : ''
+            }
         </Card>
     );
 };

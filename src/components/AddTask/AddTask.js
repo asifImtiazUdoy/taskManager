@@ -12,10 +12,11 @@ import {
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { AuthContext } from '../../contexts/AuthProvider/AuthProvider';
-import { Navigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 
 const AddTask = () => {
     const { user } = useContext(AuthContext);
+    const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
     const { register, handleSubmit, formState: { errors } } = useForm();
 
@@ -43,7 +44,7 @@ const AddTask = () => {
                 }
             })
         }
-        
+
         setLoading(true);
         const formData = new FormData();
         formData.append('image', data.image[0]);
@@ -66,8 +67,8 @@ const AddTask = () => {
                     .then(result => {
                         if (result.acknowledged) {
                             setLoading(false);
-                            <Navigate to='/tasks'></Navigate>
-                            toast.success('Task Added Successfully!')
+                            navigate('/tasks');
+                            toast.success('Task Added Successfully!');
                         }
                     })
             }

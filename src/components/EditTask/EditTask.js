@@ -15,7 +15,7 @@ import { FaWindowClose } from 'react-icons/fa';
 const EditTask = ({ open, setOpen, handleOpen, task, refetch }) => {
     const [loading, setLoading] = useState(false);
     const { register, handleSubmit, formState: { errors } } = useForm();
-    const { _id, title, description } = task;
+    const { _id, title, description, image } = task;
 
     const handleUpdate = (data) => {
         if (data.image.length === 0) {
@@ -78,13 +78,13 @@ const EditTask = ({ open, setOpen, handleOpen, task, refetch }) => {
                     </div>
                     <form onSubmit={handleSubmit(handleUpdate)}>
                         <CardBody>
-                            <Input label="Task Title" size="lg" {...register('title', { required: "Task name is required" })} value={title} />
+                            <Input label="Task Title" size="lg" {...register('title', { required: "Task name is required" })} defaultValue={title} />
                             {errors.title && <span className='text-red-600'>This field is required</span>}
                             <div className="my-4">
-                                <Textarea label="Task Description" {...register('description', { required: "Task Description is required" })} value={description} />
+                                <Textarea label="Task Description" {...register('description', { required: "Task Description is required" })} defaultValue={description} />
                             </div>
                             {errors.description && <span className='text-red-600'>This field is required</span>}
-                            <Input type="file" size="lg" {...register('image')} />
+                            <Input type="file" size="lg" {...register('image')} defaultValue={image} />
                             <Button className='mt-4' type='submit' color='teal' variant="gradient" fullWidth>
                             {loading ? 'Uploading...' : 'Update Task'}
                             </Button>
