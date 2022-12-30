@@ -16,14 +16,16 @@ export const route = createBrowserRouter([
                 element: <AddTask></AddTask>
             },
             {
-                path: '/tasks/:email',
-                element: <PrivateRoutes><MyTasks></MyTasks></PrivateRoutes>,
-                loader: ({ params }) => fetch(`https://task-backend-xi.vercel.app/tasks?email=${params.email}`)
+                path: '/tasks',
+                element: <PrivateRoutes><MyTasks></MyTasks></PrivateRoutes>
             },
             {
-                path: '/tasks/completed/:email',
-                element: <PrivateRoutes><MyTasks></MyTasks></PrivateRoutes>,
-                loader: ({ params }) => fetch(`https://task-backend-xi.vercel.app/tasks?type=completed&email=${params.email}`)
+                path: '/tasks/completed',
+                element: <PrivateRoutes><MyTasks></MyTasks></PrivateRoutes>
+            },
+            {
+                path: '/tasks/incompleted',
+                element: <PrivateRoutes><MyTasks></MyTasks></PrivateRoutes>
             },
             {
                 path: '/login',

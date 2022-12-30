@@ -55,7 +55,7 @@ const TopBar = () => {
                 color="blue-gray"
                 className="p-1 font-normal"
             >
-                <Link to={`/tasks/${user?.email}`} className="flex items-center">
+                <Link to='/tasks' className="flex items-center">
                     My tasks
                 </Link>
             </Typography>
@@ -65,7 +65,7 @@ const TopBar = () => {
                 color="blue-gray"
                 className="p-1 font-normal"
             >
-                <Link to={`/tasks/completed/${user?.email}`} className="flex items-center">
+                <Link to='/tasks/completed' className="flex items-center">
                     Completed Task
                 </Link>
             </Typography>
@@ -93,12 +93,16 @@ const TopBar = () => {
                         user ?
                             <Menu placement="bottom-end">
                                 <MenuHandler>
-                                    <Avatar className="border-2 p-1 cursor-pointer border-violet-600 hover:shadow" width="60" src="./logo192.png" alt="avatar" variant="circular" />
+                                    {
+                                        user?.photoURL ?
+                                            <Avatar className="border-2 p-1 cursor-pointer border-violet-600 hover:shadow" width="60" src={user.photoURL} alt="User" variant="circular" /> :
+                                            <Avatar className="border-2 p-1 cursor-pointer border-violet-600 hover:shadow" width="60" src="./logo192.png" alt="avatar" variant="circular" />
+                                    }
                                 </MenuHandler>
                                 <MenuList>
-                                    <MenuItem><Link>All Tasks</Link></MenuItem>
-                                    <MenuItem><Link>Completed Tasks</Link></MenuItem>
-                                    <MenuItem><Link>Incompleted Tasks</Link></MenuItem>
+                                    <MenuItem><Link to='/tasks'>All Tasks</Link></MenuItem>
+                                    <MenuItem><Link to='/tasks/completed'>Completed Tasks</Link></MenuItem>
+                                    <MenuItem><Link to='tasks/incompleted'>Incompleted Tasks</Link></MenuItem>
                                     <MenuItem><span onClick={handleLogout}>Log Out</span></MenuItem>
                                 </MenuList>
                             </Menu> :

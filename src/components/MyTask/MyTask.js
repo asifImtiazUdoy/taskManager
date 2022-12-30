@@ -11,7 +11,7 @@ import {
 import { FaPencilAlt, FaTrashAlt } from "react-icons/fa";
 import { toast } from 'react-hot-toast';
 
-const MyTask = ({ task, handleDelete, handleOpen }) => {
+const MyTask = ({ task, handleDelete, handleOpen, refetch }) => {
     const { _id, title, description, status } = task;
     const handleUpdate = (event) => {
         let data = { status: 0 };
@@ -29,15 +29,18 @@ const MyTask = ({ task, handleDelete, handleOpen }) => {
             body: JSON.stringify(data)
         })
             .then(res => res.json())
-            .then(result => toast.success('Task Updated Successfully!'))
+            .then(result => {
+                refetch();
+                toast.success('Task Status Updated Successfully!')
+            })
     }
 
     return (
-        <Card>
+        <Card className='justify-between'>
             <CardHeader color="blue" className="relative h-56">
                 <img
                     src="/img/blog.jpg"
-                    alt="img-blur-shadow"
+                    alt="TaskImage"
                     className="h-full w-full"
                 />
             </CardHeader>
